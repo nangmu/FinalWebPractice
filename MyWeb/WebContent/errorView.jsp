@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-로그인 실패 ㅠㅠ
+<%= request.getAttribute("errorMessage") %>
+<a href="/mainView.jsp">메인 페이지로 이동</a>
 </body>
 </html>

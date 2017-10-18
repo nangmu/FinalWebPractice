@@ -1,4 +1,4 @@
-package main.java.services;
+package main.java.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -10,11 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import main.java.DAO.UserDao;
 import main.java.VO.User;
 
 
 public class LoginCheck extends HttpServlet{
+    private static final Logger log = LoggerFactory.getLogger(LoginCheck.class);
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -50,20 +54,22 @@ public class LoginCheck extends HttpServlet{
 		UserDao userDao = new UserDao();
 		User user = userDao.getUser(id);
 		if(user==null){
-			path="/login_failed.jsp";
-			//log.info("ID 불일치");
+			path="/errorView.jsp";
+			req.setAttribute("errorMessage","ID오류");
+			log.info("ID 불일치");
 		}else{
 			if(!pw.equals(user.getPw())){
-				path="/login_failed.jsp";
-				//log.info("PW 불일치");
+				path="/errorView.jsp";
+				req.setAttribute("errorMessage","PW오류");
+				log.info("PW 불일치");
 			}else{
 				req.setAttribute("users",userDao.getAllUsers());
 				path = "/userView.jsp";
-				//log.info("로그인 성공");
+				log.info("로그인 성공");
 			}
 		}
 		
-		RequestDispatcher rd = req.getRequestDispatcher(path);
+		RequestDispatcher rd = req.getRequestDispatcher("/userPagingProcess");
 		rd.forward(req, resp);
 	}
 	

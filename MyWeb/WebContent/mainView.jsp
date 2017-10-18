@@ -10,7 +10,7 @@
 	<ul>
 		<li><a href="/loginView.jsp">로그인</a></li>
 		<li><a href="/registerView.jsp">회원가입</a></li>
-		<li><a href="/userView.jsp">사용자목록</a></li>
+		<li><a href="/userPagingProcess">사용자목록</a></li>
 		<li><a href="/boardView.jsp">게시판</a></li>
 	</ul>
 </body>
