@@ -11,9 +11,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.core.LogbackException;
 import main.java.VO.User;
 
 public class UserDao {
+	
 	public void insert(User user) throws NamingException, SQLException{
 		  Context init = new InitialContext();
 		  DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/web");

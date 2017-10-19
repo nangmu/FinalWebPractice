@@ -3,6 +3,8 @@ package main.java.VO;
 public class Paging {
 	public static final int USER_DEFAULT_PAGE_SIZE = 5;
 	public static final int USER_DEFAULT_GROUP_SIZE = 3;
+	public static final int BOARD_DEFAULT_PAGE_SIZE = 5;
+	public static final int BOARD_DEFAULT_GROUP_SIZE = 3;
 	
 	private int pageSize;
 	private int groupSize;
@@ -18,12 +20,12 @@ public class Paging {
 	private int startingRecordIdx;
 	private int endingRecordIdx;
 
+	public Paging(){}
 	public Paging(int pageSize, int groupSize,int totalrecords,int curPage){
 		this.pageSize=pageSize; this.groupSize=groupSize;
 		this.totalRecords=totalrecords; this.curPage=curPage;
 		init();
 	}
-	
 	private void init(){
 		totalPage = totalRecords / pageSize;
 		if(totalRecords%pageSize!=0) totalPage++;

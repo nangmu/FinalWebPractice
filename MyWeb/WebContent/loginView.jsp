@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<table><form action="/loginCheck" method="post">
+<table><form action="/login" method="post">
 <tr>
 <td>ID</td>
 <td><input type="text" name="id"/></td>
@@ -20,7 +20,8 @@
 
 <tr>
 <td></td>
-<td><input type="submit" value="Login"/>&nbsp<input type="reset" value="cancle"/></td>
+<td><input type="submit" value="Login"/>&nbsp<input type="reset" value="cancle"/>
+<input type="button" value="메인페이지로" onclick="window.location.replace('/mainView.jsp')"/></td>
 </tr>
 </form></table>
 </body>

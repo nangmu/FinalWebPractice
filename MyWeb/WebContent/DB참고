@@ -1,0 +1,7 @@
+[Users]
+id(varchar(20)),pw(varchar(20)),name(varchar(20)),date(timestamp)
+
+[Boards]
+bNum(int), bGroup(int), bLevel(int), bOrder(int),
+id(varchar(20)),writer(varchar(20)),title(varchar(40)),contents(text),
+date(timestamp), viewcount(int)
