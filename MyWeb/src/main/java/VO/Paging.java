@@ -3,7 +3,7 @@ package main.java.VO;
 public class Paging {
 	public static final int USER_DEFAULT_PAGE_SIZE = 5;
 	public static final int USER_DEFAULT_GROUP_SIZE = 3;
-	public static final int BOARD_DEFAULT_PAGE_SIZE = 5;
+	public static final int BOARD_DEFAULT_PAGE_SIZE = 20;
 	public static final int BOARD_DEFAULT_GROUP_SIZE = 3;
 	
 	private int pageSize;

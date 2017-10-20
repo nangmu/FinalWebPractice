@@ -19,3 +19,19 @@ Client <---> JSP View(...) <----> Servlet(...)<----> DAO(User,Board,Paging) <---
 1. 네이밍이 체계적이지 않아서 상당히 헷갈린다.
 2. test코드를 작성하지 않았다.
  -----------------------------------------------------------------
+3: 구조변경: 하나의 서블릿에서 모든 HTTP요청을 받고 초기화한 후 요구하는 자원에 맞는 Controller에게 넘겨주도록 변경.
+1)DispatcherServlet내에서 요청 url에 맞는 Controller을 직접 생성. 이러한 방법은 if,else 구문으로 Controller가 추가
+될때마다 계속 변경해줘야 됨. 그리고 요청이 올 때마다 객체를 생성해주어야 하는 부담감이 있음.
+2)위 단점을 보완하고자 RequestMapping 클래스를 만들어 Controller 인스턴스들을 url과 미리 매핑시켜놓고 사용.
+요청 추가 때마다 DispatcherServlet 재컴파일방지, 인스턴스 재활용.
+3)controller 처리 후 사용자에게 결과를 알려주어야함(요청이 실패했는지, 성공했는지, 진행중인지 그리고 이에 따른 결과페이지)
+에러,성공 등 결과 페이지를 보여주기 위해 jsp에 forward를 통한 위임을 하거나, redirect를 통해 클라이언트가 다른 요청을 하도록 해야함.
+controller에서 처리후 DispatcherService로 이러한 정보가 전달되어야 함. req.setAttribute("view","xx.jsp")사용?
+이럴 바에 controller의 리턴값으로 주는게 편함(아직은 리턴값이 굉장히 단순하기 때문 - redirect:path, path.jsp)
+변경 및 테스트 완료. 추가로 jsp에 임의 접근이 불가하도록 jsp파일들을 WEB-INF에 넣어줌.
+4)로그인체크 중복을 제거하기 위해 필터로 빼서 컨트롤러로 요청이 가기 전에 먼저 처리되도록 LoginFilter 추가
+5)Controller 추가도중 아무런 작업도 하지 않고 이동만 하는 Controller가 많아짐. 이동을 전담하는 ForwardController 추가
+6)LoginController 수정중 dao의 SQL 익셉션이 거슬림. 런타임 Exception 추가.
+7) 6)과 DAO 리팩토링 일부 완료
+8) 전부 변경 완료. 네이밍 수정. 로그아웃 추가. 필터 추가(로그인 유무에 따라 url 접근 제한). 
+

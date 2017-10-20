@@ -11,76 +11,83 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.core.LogbackException;
+import main.java.Exception.MySqlException;
 import main.java.VO.User;
 
 public class UserDao {
-	
-	public void insert(User user) throws NamingException, SQLException{
-		  Context init = new InitialContext();
-		  DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/web");
-		  Connection conn = ds.getConnection(); 
+	/*[[update, insert => 처리만 해주면 된다]]
+	 * 변경부분: Sql Query, 매개변수, 매개변수 값을 statement로 세팅하는 부분
+	 */
+	public void insert(User user) throws MySqlException {
+		String sql = "INSERT INTO users VALUES(?,?,?,now())";
 		
-		  String sql = "INSERT INTO users VALUES(?,?,?,now())";
-		  PreparedStatement pstm = conn.prepareStatement(sql);
-		  pstm.setString(1, user.getId());
-		  pstm.setString(2, user.getPw());
-		  pstm.setString(3, user.getName());
-		  
-		  pstm.executeUpdate();
-		  
-		  pstm.close();
-		  conn.close();
+		try(Connection conn = ((DataSource)(new InitialContext()).lookup("java:comp/env/jdbc/web")).getConnection();
+			PreparedStatement pstm = conn.prepareStatement(sql)) {
+			pstm.setString(1, user.getId());
+			pstm.setString(2, user.getPw());
+			pstm.setString(3, user.getName());
+			pstm.executeUpdate();
+		} catch (NamingException n) {
+			n.printStackTrace();
+		} catch (SQLException s) {
+			throw new MySqlException(s);
+		}
 	}
-	public void update(User user) throws NamingException, SQLException{
-		 DataSource ds = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/web");
-		  Connection conn = ds.getConnection();
-		  String sql = "UPDATE users SET pw=?,name=? WHERE id=?";
-		  PreparedStatement pstm = conn.prepareStatement(sql);
-		  pstm.setString(1, user.getPw());
-		  pstm.setString(2, user.getName());
-		  pstm.setString(3, user.getId());
-		  
-		  pstm.executeUpdate();
-		  
-		  pstm.close();
-		  conn.close();
+	public void update(User user)throws MySqlException{
+		String sql = "UPDATE users SET pw=?,name=? WHERE id=?";
+		try(Connection conn = ((DataSource)new InitialContext().lookup("java:comp/env/jdbc/web")).getConnection();
+				 PreparedStatement pstm = conn.prepareStatement(sql)){
+			  pstm.setString(1, user.getPw());
+			  pstm.setString(2, user.getName());
+			  pstm.setString(3, user.getId());
+			  pstm.executeUpdate();
+		}catch (NamingException n) {
+			n.printStackTrace();
+		} catch (SQLException s) {
+			throw new MySqlException(s);
+		}
+		
 	}
-	public User getUser(String id)throws SQLException, NamingException{
-		  Context init = new InitialContext();
-		  DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/web");
-		  Connection conn = ds.getConnection();
-		  String sql = "select id,pw,name from users where id=?";
-		  PreparedStatement pstm = conn.prepareStatement(sql);
-		  pstm.setString(1, id);
-		  ResultSet rs = pstm.executeQuery();
-		  User user = null;
-		  if(rs.next()){
-			  user = new User(rs.getString(1),rs.getString(2),rs.getString(3));
-		  }
-		  rs.close();
-		  pstm.close();
-		  conn.close();
-		  return user;
+
+	public User getUser(String id) throws MySqlException {
+		String sql = "select id,pw,name from users where id=?";
+		User user = null;
+		try (Connection conn = ((DataSource) new InitialContext().lookup("java:comp/env/jdbc/web")).getConnection();
+			 PreparedStatement pstm = conn.prepareStatement(sql)) {
+
+			pstm.setString(1, id);
+			ResultSet rs = pstm.executeQuery();
+
+			if (rs.next()) {
+				user = new User(rs.getString(1), rs.getString(2), rs.getString(3));
+			}
+			if(rs!=null)
+			rs.close();
+		} catch (NamingException n) {
+			n.printStackTrace();
+		} catch (SQLException s) {
+			throw new MySqlException(s);
+		}
+		return user;
 	}
 	
-	public ArrayList<User> getAllUsers()throws SQLException, NamingException{
-		Context init = new InitialContext();
-		DataSource ds = (DataSource) init.lookup("java:comp/env/jdbc/web");
-		Connection conn = ds.getConnection();
+	public ArrayList<User> getAllUsers() throws MySqlException {
 		String sql = "select * from users";
-		PreparedStatement pstm = conn.prepareStatement(sql);
-		ResultSet rs = pstm.executeQuery();
-		ArrayList<User> userList = new ArrayList<>();
-		while(rs.next()){
-			userList.add(new User(rs.getString(1),rs.getString(2),rs.getString(3)));
+		ArrayList<User> userList = null;
+		try (Connection conn = ((DataSource) new InitialContext().lookup("java:comp/env/jdbc/web")).getConnection();
+				PreparedStatement pstm = conn.prepareStatement(sql)) {
+			ResultSet rs = pstm.executeQuery();
+			userList = new ArrayList<>();
+			while (rs.next()) {
+				userList.add(new User(rs.getString(1), rs.getString(2), rs.getString(3)));
+			}
+			if(rs!=null)
+			rs.close();
+		} catch (NamingException n) {
+			n.printStackTrace();
+		} catch (SQLException s) {
+			throw new MySqlException(s);
 		}
-		  rs.close();
-		  pstm.close();
-		  conn.close();
 		return userList;
 	}
 }
