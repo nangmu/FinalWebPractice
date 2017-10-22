@@ -34,7 +34,6 @@ public class LoginFilter implements Filter{
 		HttpSession session = request.getSession();
 		
 		String userId = (String)session.getAttribute("userId");
-		logger.debug("userId:{}",userId);
 		String[] urls = {"/userlist","/answer_rb_Form","/write_rb_Form"};
 		boolean accessFlag = false;
 		
@@ -46,9 +45,9 @@ public class LoginFilter implements Filter{
 			}
 		}
 		//로그인 했는데 로그인 페이지에 접근시(UI에서 버튼을 없애도 임의 접근이 가능하기때문.)
-		if(userId!=null && url.equals("/loginForm")){
+		if(userId!=null && (url.equals("/loginForm")||url.equals("/login"))){
 			logger.debug("[접근 에러] - 이미 로그인 완료됨. home.jsp로 이동중...");
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
 			rd.forward(request, response);
 			return;
 		}

@@ -38,7 +38,6 @@ public class DispatcherServlet extends HttpServlet{
 	private void doService(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException{
 		String url = req.getRequestURI();
 		logger.debug("Dispatcher Start!!! RequestURI:{}",url);
-		logger.debug("혹시?:{}",req.getServletPath());
 		Controller controller = requestMapping.getController(url);
 		if(controller==null){
 			logger.debug("올바르지 않은 경로입니다.");
@@ -46,13 +45,12 @@ public class DispatcherServlet extends HttpServlet{
 		}
 		
 		String result = controller.doService(req,resp);
-		//사용자에게 결과를 알려줘야 함--> error? success? ing~?
+		
 		if((result.trim()).startsWith("redirect:")){
 			logger.debug("{}로 이동",result);
 			resp.sendRedirect(result.substring(9));
 			return;
 		}
-		logger.debug("paging{}",req.getAttribute("paging"));
 		String path = "/WEB-INF"+result;
 		logger.debug("{}로 이동",path);
 		RequestDispatcher rd = req.getRequestDispatcher(path);

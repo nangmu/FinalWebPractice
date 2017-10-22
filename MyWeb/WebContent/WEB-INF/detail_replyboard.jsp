@@ -14,6 +14,7 @@ Board board = (Board)request.getAttribute("board");
 <body>
 <input type="button" name="button" value="목록으로" onclick="window.location.replace('/replyboard')"/>
 <input type="button" name="button" value="답변하기" onclick="window.location.replace('/answer_rb_Form?bGroup=<%=board.getbGroup()%>&bLevel=<%=board.getbLevel()%>&bOrder=<%=board.getbOrder()%>')"/>
+<input type="button" name="button" value="삭제하기" onclick="window.location.replace('/deleteReplyBoard?bNum=<%=board.getbNum()%>')"/>
 
 <table>
 <tr>

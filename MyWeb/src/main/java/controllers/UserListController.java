@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.DAO.UserDao;
+import main.java.DAO.UserDao_refactoring;
 import main.java.VO.Paging;
 import main.java.VO.User;
 
@@ -28,7 +28,7 @@ public class UserListController implements Controller{
 		if(reqPage==null || reqPage.equals("")) reqPage = "1";
 		int curPage = Integer.parseInt(reqPage);
 		
-		UserDao dao = new UserDao();
+		UserDao_refactoring dao = new UserDao_refactoring();
 		ArrayList<User> userList = dao.getAllUsers();
 		int totalRecords = userList.size();
 		

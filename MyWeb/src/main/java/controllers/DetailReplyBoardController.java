@@ -7,7 +7,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.DAO.BoardDao;
+import main.java.DAO.BoardDao_refactoring;
 import main.java.VO.Board;
 
 public class DetailReplyBoardController implements Controller{
@@ -16,14 +16,10 @@ public class DetailReplyBoardController implements Controller{
 	public String doService(HttpServletRequest req, HttpServletResponse resp) {
 		int parent_bNum = Integer.parseInt(req.getParameter("bNum"));
 
-		BoardDao boardDao = new BoardDao();
+		BoardDao_refactoring boardDao = new BoardDao_refactoring();
 		Board parent_board = boardDao.getBoard(parent_bNum);
-		try {
-			boardDao.upViewCount(parent_bNum);
-			parent_board.setContents(boardDao.getContents(parent_bNum));
-		} catch (NamingException | SQLException e) {
-			e.printStackTrace();
-		}
+		boardDao.upViewCount(parent_bNum);
+		parent_board.setContents(boardDao.getContents(parent_bNum));
 		req.setAttribute("board", parent_board);
 
 		return"/detail_replyboard.jsp";

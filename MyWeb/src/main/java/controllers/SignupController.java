@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.DAO.UserDao;
+import main.java.DAO.UserDao_refactoring;
 import main.java.VO.User;
 
 public class SignupController implements Controller {
@@ -26,7 +26,7 @@ public class SignupController implements Controller {
 			logger.debug("[가입에러] - 입력하세요");
 			return "/signup.jsp";
 		}
-		UserDao dao = new UserDao();
+		UserDao_refactoring dao = new UserDao_refactoring();
 		User check = null;
 		check = dao.getUser(userId);
 		if (check != null) {
@@ -39,7 +39,7 @@ public class SignupController implements Controller {
 			return "/signup.jsp";
 		}
 		User user = new User(userId,password,userName);
-		dao.insert(user);
+		dao.insertUser(user);
 		
 		req.getSession().setAttribute("userId", userId);
 		req.getSession().setAttribute("userName", userName);

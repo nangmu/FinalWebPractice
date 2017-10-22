@@ -19,6 +19,7 @@ public class RequestMapping {
 		map.put("/answer_rb", new AnswerReplyBoardController());
 		map.put("/write_rb", new WriteReplyBoardController());;
 		map.put("/logout", new LogoutController());
+		map.put("/deleteReplyBoard", new DeleteReplyBoardController());
 	}
 	public Controller getController(String url){
 		return map.get(url);

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.DAO.UserDao;
+import main.java.DAO.UserDao_refactoring;
 import main.java.VO.User;
 
 public class LoginController implements Controller {
@@ -26,11 +26,12 @@ public class LoginController implements Controller {
 			return "/login.jsp";
 		}
 
-		UserDao dao = new UserDao();
+		UserDao_refactoring dao = new UserDao_refactoring();
 		User user = null;
 		user = dao.getUser(userId);
 		if(user==null || !password.equals(user.getPw())){
 			logger.debug("[로그인 오류] - ID가 존재하지 않거나 Password가 일치하지 않습니다.");
+			logger.debug("입력정보 : {},{}",userId,password);
 			return "/login.jsp";
 		}
 		

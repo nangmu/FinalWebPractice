@@ -1,16 +1,18 @@
 package main.java.controllers;
 
-import java.sql.SQLException;
-
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import main.java.DAO.BoardDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import main.java.DAO.BoardDao_refactoring;
 import main.java.VO.Board;
 
 public class AnswerReplyBoardController implements Controller {
-
+	/** The usual Logger.*/
+	private static final Logger logger = LoggerFactory.getLogger(AnswerReplyBoardController.class);
+	
 	@Override
 	public String doService(HttpServletRequest req, HttpServletResponse resp) {
 		String title = req.getParameter("title");
@@ -25,16 +27,11 @@ public class AnswerReplyBoardController implements Controller {
 		board.setTitle(title);board.setContents(contents);
 		board.setId(id);board.setWriter(writer);
 		
-		BoardDao dao = new BoardDao();
-		try {
-			dao.changeOrder((Integer.parseInt(req.getParameter("parent_bGroup"))),
-					(Integer.parseInt(req.getParameter("parent_bOrder"))));
-		} catch (NumberFormatException | SQLException | NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		dao.insert(board);
-		
+		BoardDao_refactoring dao = new BoardDao_refactoring();
+		dao.upOrder((Integer.parseInt(req.getParameter("parent_bGroup"))),
+						(Integer.parseInt(req.getParameter("parent_bOrder"))));
+		dao.insertBoard(board);
+		logger.debug("답변을 달았습니다.");
 		return "redirect:/replyboard";
 	}
 

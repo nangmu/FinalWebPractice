@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.DAO.BoardDao;
+import main.java.DAO.BoardDao_refactoring;
 import main.java.VO.Board;
 import main.java.VO.Paging;
 
@@ -23,7 +23,7 @@ public class ReplyBoardController implements Controller{
 		String reqPage = req.getParameter("reqPage");
 		if(reqPage==null || reqPage.equals("")) reqPage = "1";
 		int curPage = Integer.parseInt(reqPage);
-		BoardDao dao = new BoardDao();
+		BoardDao_refactoring dao = new BoardDao_refactoring();
 		ArrayList<Board> boardList = dao.getAllBoards();
 		int totalRecords = boardList.size();
 		if(totalRecords==0){
