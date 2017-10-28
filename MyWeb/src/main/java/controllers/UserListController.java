@@ -16,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import main.java.DAO.UserDao_refactoring;
 import main.java.VO.Paging;
 import main.java.VO.User;
-
+/*
+ * ì‚¬ìš©ì ëª©ë¡ ë³´ê¸° ì²˜ë¦¬ ê²Œì‹œíŒ - ShowUserlistController
+ */
 public class UserListController implements Controller{
 	private static final Logger logger = LoggerFactory.getLogger(UserListController.class);
 
@@ -31,15 +33,16 @@ public class UserListController implements Controller{
 		UserDao_refactoring dao = new UserDao_refactoring();
 		ArrayList<User> userList = dao.getAllUsers();
 		int totalRecords = userList.size();
-		
+
+		//DBë‚´ë¶€ì—ì„œ ë³´ì—¬ì¤„ ì‚¬ìš©ìë§Œ ë”°ë¡œ ë½‘ì„ ìˆ˜ ìˆìŒ.
+		//DAO ë©”ì†Œë“œ ì¶”ê°€ í•„ìš” - getTotalNums(), getTopUsers(int Num)
 		if(totalRecords==0){
-			req.setAttribute("message", "»ç¿ëÀÚ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+			req.setAttribute("message", "ì‚¬ìš©ìê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
 		}else{
-			req.setAttribute("message", "ÀüÃ¼ »ç¿ëÀÚ: "+totalRecords+"¸í");
+			req.setAttribute("message", "ì „ì²´ ì‚¬ìš©ì: "+totalRecords+"ëª…");
 			Paging paging = new Paging(pageSize,groupSize,totalRecords,curPage);
 			req.setAttribute("paging", paging);
 			req.setAttribute("users", userList);
-			logger.info("paging ÃÊ±âÈ­ ÀÛ¾÷ ¿Ï·á\n{}",paging.toString());
 		}
 		return "/userlist.jsp";
 	}

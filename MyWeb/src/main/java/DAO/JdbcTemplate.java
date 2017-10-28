@@ -28,6 +28,7 @@ abstract public class JdbcTemplate {
 		} catch (NamingException n) {
 			n.printStackTrace();
 		} catch (SQLException s) {
+			s.printStackTrace();
 			throw new MySqlException();
 		}
 	}
@@ -46,6 +47,7 @@ abstract public class JdbcTemplate {
 		} catch (NamingException n) {
 			n.printStackTrace();
 		} catch (SQLException s) {
+			s.printStackTrace();
 			throw new MySqlException();
 		}
 		return object;

@@ -44,15 +44,14 @@ public class LoginFilter implements Filter{
 				break;
 			}
 		}
-		//·Î±×ÀÎ Çß´Âµ¥ ·Î±×ÀÎ ÆäÀÌÁö¿¡ Á¢±Ù½Ã(UI¿¡¼­ ¹öÆ°À» ¾ø¾Öµµ ÀÓÀÇ Á¢±ÙÀÌ °¡´ÉÇÏ±â¶§¹®.)
 		if(userId!=null && (url.equals("/loginForm")||url.equals("/login"))){
-			logger.debug("[Á¢±Ù ¿¡·¯] - ÀÌ¹Ì ·Î±×ÀÎ ¿Ï·áµÊ. home.jsp·Î ÀÌµ¿Áß...");
+			logger.debug("[ì ‘ê·¼ì—ëŸ¬] - Already logined. Go > home.jsp");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/home.jsp");
 			rd.forward(request, response);
 			return;
 		}
 		if(userId==null && accessFlag){
-			logger.debug("[Á¢±Ù ¿¡·¯] - ·Î±×ÀÎ½Ã Á¢±Ù °¡´ÉÇÔ. login.jsp·Î ÀÌµ¿Áß...");
+			logger.debug("[ì ‘ê·¼ì—ëŸ¬] - Need to be logined. Go > login.jsp");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
 			rd.forward(request, response);
 			return;

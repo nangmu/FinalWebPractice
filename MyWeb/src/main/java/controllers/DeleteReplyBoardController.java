@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import main.java.DAO.BoardDao_refactoring;
 
+/*
+ * ë‹µë³€ê²Œì‹œíŒ ê¸€ì‚­ì œ ì²˜ë¦¬ ì»¨íŠ¸ë¡¤ëŸ¬ replyboard_Deleteê¸€Controller
+ */
 public class DeleteReplyBoardController implements Controller {
 	private static final Logger logger = LoggerFactory.getLogger(DeleteReplyBoardController.class);
 	
@@ -16,7 +19,7 @@ public class DeleteReplyBoardController implements Controller {
 		int bNum = Integer.parseInt(req.getParameter("bNum"));
 		BoardDao_refactoring dao = new BoardDao_refactoring();
 		dao.deleteBoard(bNum);
-		logger.debug("{}¹ø °Ô½Ã±ÛÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù.",bNum);
+		logger.debug("[ì„±ê³µ]{}ë²ˆ ê¸€ì´ ì‚­ì œ ë˜ì—ˆìŠµë‹ˆë‹¤.",bNum);
 		
 		return "redirect:/replyboard";
 	}

@@ -1,24 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ page import="main.java.VO.*,java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 String message = (String)request.getAttribute("message");
+String search_key = request.getParameter("search_key");
+String search_value = request.getParameter("search_value");
+if(search_key==null) search_key="";
+if(search_value==null) search_value="";
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
 <body>
-<%= message %>&nbsp&nbsp&nbsp<a href="/write_rb_Form">±Û¾²±â</a>
-&nbsp<input type="button" value="¸ŞÀÎÆäÀÌÁö·Î" onclick="window.location.replace('/')"/>
+<%= message %>&nbsp&nbsp&nbsp<a href="/write_rb_Form">ê¸€ì“°ê¸°</a>
+&nbsp<input type="button" value="ë©”ì¸í˜ì´ì§€ë¡œ" onclick="window.location.replace('/')"/>
 <table>
 <tr>
-<th>±Û¹øÈ£</th>
-<th>Á¦¸ñ</th>
-<th>ÀÛ¼ºÀÚ</th>
-<th>Á¶È¸¼ö</th>
+<th>ê¸€ë²ˆí˜¸</th>
+<th>ì œëª©</th>
+<th>ì‘ì„±ì</th>
+<th>ì¡°íšŒìˆ˜</th>
+<th>ì‘ì„±ë‚ ì§œ</th>
 </tr>
 <%
 
@@ -45,9 +50,21 @@ Board board = boards.get(i);
 <a href="/detail_rb?bNum=<%=board.getbNum()%>"><%= board.getTitle() %></a></td>
 <td><%= board.getWriter() %></td>
 <td><%= board.getViewCount() %></td>
+<td><%= board.getTime() %></td>
 </tr>
 <%} %>
 </table>
+<!-- 
+<form action="/replyboard" method="post">
+<select name="search_key">
+	<option value="title" <%if(search_key.equals("title")) out.print("selected"); %>>ì œëª©</option>
+	<option value="writer" <%if(search_key.equals("writer")) out.print("selected"); %>>ì‘ì„±ì</option>
+</select>
+<input type="text" name="search_value" value=<%=search_value %> />
+<input type="submit" value="ê²€ìƒ‰"/>
+</form> -->
+
+<br>
 <a href="/replyboard?reqPage=1">[<<]</a>
 <% int before = curPage-1; if(before<1) before=1;
    int next = curPage+1; if(next>totalPage) next=totalPage;

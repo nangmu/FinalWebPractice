@@ -12,7 +12,7 @@ public class LogoutController implements Controller{
 	
 	@Override
 	public String doService(HttpServletRequest req, HttpServletResponse resp) {
-		logger.debug("{} : �α׾ƿ�",req.getSession().getAttribute("userId"));
+		logger.debug("로그아웃 - {} ",req.getSession().getAttribute("userId"));
 		req.getSession().invalidate();
 		return "/home.jsp";
 	}

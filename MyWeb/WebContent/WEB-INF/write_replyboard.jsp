@@ -6,17 +6,17 @@
 <% String userId = (String)request.getSession().getAttribute("userId"); %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
 <body>
 <table><form action="/write_rb" method="post" enctype="multipart/form-data">
-<input type="hidden" name="id" value= <%=userId %>/>
-<input type="hidden" name="writer" value= <%=userName %>/>
+<input type="hidden" name="id" value= <%=userId %>>
+<input type="hidden" name="writer" value= <%=userName %>>
 
 <tr>
 <td>제목:</td>
-<td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
+<td><input type="text" name="title" placeholder="제목을 입력하세요."></td>
 </tr>
 
 <tr>
@@ -26,13 +26,13 @@
 
 <tr>
 <td>파일:</td>
-<td><input type="file" name="file"></td>
+<td><input type="file" name="file" ></td>
 </tr>
 
 <tr>
 <td></td>
-<td><input type="submit" value="등록"/><input type="reset" value="취소"/>
-<input type="button" value="목록으로" onclick="window.location.replace('/replyboard')"/></td>
+<td><input type="submit" value="등록"/><input type="reset" value="취소">
+<input type="button" value="목록으로" onclick="window.location.replace('/replyboard')"></td>
 </tr>
 </form></table>
 </body>

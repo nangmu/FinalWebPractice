@@ -1,0 +1,22 @@
+검색,파일업로드,보안,JSTL,
+자바스크립트이용검증,
+AJAX댓글, AJAX삭제,
+
+[보안]
+- 비밀번호암호화: http://d2.naver.com/helloworld/318732
+- XSS,CSRF, SQL injectioon 대응코드
+안전한 웹을 위한 코딩 한줄의 정석
+-SSL/TLS적용
+letsencrypt.org
+minix.tistory.com/395
+minix.tistory.com/397
+
+[성능]
+-서버에 로컬 캐시
+www.ehcache.org
+-프론트엔드성능개선
+
+[프론트엔드]
+javascript, jquery
+
+[빌드,배포]

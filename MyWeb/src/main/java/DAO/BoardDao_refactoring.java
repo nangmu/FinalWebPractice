@@ -16,7 +16,6 @@ public class BoardDao_refactoring {
 	/** The usual Logger. */
 	private static final Logger logger = LoggerFactory.getLogger(BoardDao_refactoring.class);
 
-	// 글 하나 등록
 	public void insertBoard(Board board) throws MySqlException {
 		JdbcTemplate template = new JdbcTemplate() {
 			@Override
@@ -34,10 +33,12 @@ public class BoardDao_refactoring {
 				pstm.setString(6, board.getTitle());
 				pstm.setString(7, board.getContents());
 				pstm.setInt(8, board.getViewCount());
+				pstm.setString(9, board.getOriginalFileName());
+				pstm.setString(10, board.getStoredFileName());
 			}
 		};
 		String sql = "INSERT INTO boards"
-				+ "(bGroup,bLevel,bOrder,id,writer,title,contents,viewcount) VALUES(?,?,?,?,?,?,?,?)";
+				+ "(bGroup,bLevel,bOrder,id,writer,title,contents,viewcount,original_file_name,stored_file_name) VALUES(?,?,?,?,?,?,?,?,?,?)";
 		template.update(sql);
 	}
 
@@ -151,6 +152,9 @@ public class BoardDao_refactoring {
 				board.setWriter(rs.getString(6));
 				board.setTitle(rs.getString(7));
 				board.setViewCount(rs.getInt(9));
+				board.setOriginalFileName(rs.getString(10));
+				board.setStoredFileName(rs.getString(11));
+				board.setTime(rs.getTimestamp(12));
 				return board;
 			}
 			@Override
@@ -160,7 +164,30 @@ public class BoardDao_refactoring {
 		String sql = "select * from boards order by bGroup desc, bOrder asc";
 		return (ArrayList)template.selectManyObjects(sql);
 	}
-	
+	public ArrayList<Board> searchBoards(String search_key, String search_value){
+		logger.debug("1:{}  2:{}",search_key,search_value);
+		JdbcTemplate template = new JdbcTemplate() {
+			@Override
+			Object resultValue(ResultSet rs) throws SQLException {
+				Board board = new Board(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4));
+				board.setId(rs.getString(5));
+				board.setWriter(rs.getString(6));
+				board.setTitle(rs.getString(7));
+				board.setViewCount(rs.getInt(9));
+				board.setOriginalFileName(rs.getString(10));
+				board.setStoredFileName(rs.getString(11));
+				board.setTime(rs.getTimestamp(12));
+				return board;
+			}
+			@Override
+			void PreparedStatementMapping(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, search_key);
+				pstmt.setString(2, search_value);
+			}
+		};
+		String sql = "select * from boards where ? like '%?%' order by bGroup desc, bOrder asc";
+		return (ArrayList)template.selectManyObjects(sql);
+	}
 	public Board getBoard(int bNum){
 		JdbcTemplate template = new JdbcTemplate() {
 			@Override
@@ -170,6 +197,9 @@ public class BoardDao_refactoring {
 				board.setWriter(rs.getString(6));
 				board.setTitle(rs.getString(7));
 				board.setViewCount(rs.getInt(9));
+				board.setOriginalFileName(rs.getString(10));
+				board.setStoredFileName(rs.getString(11));
+				board.setTime(rs.getTimestamp(12));
 				return board;
 			}
 			@Override
@@ -180,4 +210,20 @@ public class BoardDao_refactoring {
 		String sql = "select * from boards where bNum=?";
 		return (Board)template.selectOneObject(sql);
 	}
+
+	public String getOriginalFileName(String storedFileName) {
+		JdbcTemplate template = new JdbcTemplate() {
+			@Override
+			Object resultValue(ResultSet rs) throws SQLException {
+				return rs.getString(1);
+			}
+			@Override
+			void PreparedStatementMapping(PreparedStatement ps) throws SQLException {
+				ps.setString(1, storedFileName);
+			}
+		};
+		String sql = "select original_file_name from boards where stored_file_name=?";
+		return (String)template.selectOneObject(sql);
+	}
 }
+

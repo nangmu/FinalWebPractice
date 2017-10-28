@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 import main.java.Exception.MySqlException;
 import main.java.VO.User;
-/*
- * 템플릿 메소드 패턴을 사용한 중복 제거
- */
 public class UserDao_refactoring {
 	public void insertUser(User user)throws MySqlException{
 		  JdbcTemplate template = new JdbcTemplate() {
@@ -21,7 +18,6 @@ public class UserDao_refactoring {
 			}
 			@Override
 			User resultValue(ResultSet rs) {
-				// TODO Auto-generated method stub
 				return null;
 			}
 		};

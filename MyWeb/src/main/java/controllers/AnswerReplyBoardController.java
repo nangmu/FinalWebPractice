@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import main.java.DAO.BoardDao_refactoring;
 import main.java.VO.Board;
 
+/*
+ * 답변게시판 답변등록 처리 컨트롤러 replyboard_AnswerRegistController
+ */
 public class AnswerReplyBoardController implements Controller {
 	/** The usual Logger.*/
 	private static final Logger logger = LoggerFactory.getLogger(AnswerReplyBoardController.class);
@@ -26,12 +29,14 @@ public class AnswerReplyBoardController implements Controller {
 		board.setbOrder((Integer.parseInt(req.getParameter("parent_bOrder"))+1));
 		board.setTitle(title);board.setContents(contents);
 		board.setId(id);board.setWriter(writer);
-		
+		board.setOriginalFileName("");
+		board.setStoredFileName("");
 		BoardDao_refactoring dao = new BoardDao_refactoring();
 		dao.upOrder((Integer.parseInt(req.getParameter("parent_bGroup"))),
 						(Integer.parseInt(req.getParameter("parent_bOrder"))));
+		
 		dao.insertBoard(board);
-		logger.debug("�亯�� �޾ҽ��ϴ�.");
+		logger.debug("[성공] 답변 등록");
 		return "redirect:/replyboard";
 	}
 

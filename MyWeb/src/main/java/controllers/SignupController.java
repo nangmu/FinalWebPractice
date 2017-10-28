@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 import main.java.DAO.UserDao_refactoring;
 import main.java.VO.User;
 
+/*
+ * íšŒì›ê°€ì… ì²˜ë¦¬ ì»¨íŠ¸ë¡¤ëŸ¬ SignupController- javascript ê²€ì¦ í•„ìš”
+ */
 public class SignupController implements Controller {
 	private static final Logger logger = LoggerFactory.getLogger(SignupController.class);
 	
@@ -20,22 +23,23 @@ public class SignupController implements Controller {
 		String userId = req.getParameter("id");
 		String password= req.getParameter("pw");
 		String userName = req.getParameter("name");
+		logger.debug("ì…ë ¥ë°›ì€ ì´ë¦„:{}",userName);
 		
 		if(userId==null || password==null || userName==null ||
 				userId.equals("") || password.equals("")|| userName.equals("")){
-			logger.debug("[°¡ÀÔ¿¡·¯] - ÀÔ·ÂÇÏ¼¼¿ä");
+			logger.debug("[ì…ë ¥ì—ëŸ¬] - ì…ë ¥í•˜ì„¸ìš”");
 			return "/signup.jsp";
 		}
 		UserDao_refactoring dao = new UserDao_refactoring();
-		User check = null;
-		check = dao.getUser(userId);
+		User check = dao.getUser(userId);
+		
 		if (check != null) {
-			logger.debug("[°¡ÀÔ¿¡·¯] - ¾ÆÀÌµğÁ¸Àç");
+			logger.debug("[ì•„ì´ë”” ì—ëŸ¬] - ì¤‘ë³µ");
 			return "/signup.jsp";
 		}
 
-		if(password.length()<6){
-			logger.debug("[°¡ÀÔ¿¡·¯] - ÆĞ½º¿öµå¸¦ 6ÀÚ¸® ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä.");
+		if(password.length()<4){
+			logger.debug("[ë¹„ë°€ë²ˆí˜¸ ì—ëŸ¬] - 4ìë¦¬ ì´ìƒ ì…ë ¥í•´ì£¼ì„¸ìš”");
 			return "/signup.jsp";
 		}
 		User user = new User(userId,password,userName);
@@ -44,7 +48,7 @@ public class SignupController implements Controller {
 		req.getSession().setAttribute("userId", userId);
 		req.getSession().setAttribute("userName", userName);
 		
-		logger.debug("[°¡ÀÔ¼º°ø] - {} , {}",userId, userName);
+		logger.debug("íšŒì›ê°€ì… ì„±ê³µ - {} , {}",userId, userName);
 		return "redirect:/";
 	}
 
