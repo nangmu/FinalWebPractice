@@ -12,6 +12,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import main.java.Exception.MySqlException;
 
 abstract public class JdbcTemplate {
@@ -69,6 +72,7 @@ abstract public class JdbcTemplate {
 		} catch (NamingException n) {
 			n.printStackTrace();
 		} catch (SQLException s) {
+			s.printStackTrace();
 			throw new MySqlException();
 		}
 		return list;

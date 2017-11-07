@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.DAO.BoardDao_refactoring;
+import main.java.DAO.FileDao;
 
 /*
  * 답변게시판 파일다운 처리 게시판 - replyboard_FileDownController
@@ -24,13 +23,14 @@ public class FileDownController implements Controller{
 
 	@Override
 	public String doService(HttpServletRequest req, HttpServletResponse resp) {
+		//C:/uploadFile/(오늘날짜(년월일)-나중에)/랜덤파일이름/업로드파일들
 		String storedFileName = req.getParameter("filename");
-		BoardDao_refactoring dao = new BoardDao_refactoring();
+		FileDao dao = FileDao.getInstance();
 		String originalFileName = dao.getOriginalFileName(storedFileName);
 		int BUFSIZE = 4096;
 		String filepath = "C:\\uploadFile" + File.separator + storedFileName;
 		File file = new File(filepath);
-
+		
 		if (!file.exists()) {
 			logger.debug("파일이 존재하지 않습니다. {}", filepath);
 			return null;

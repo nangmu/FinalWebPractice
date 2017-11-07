@@ -34,7 +34,7 @@ public class LoginController implements Controller {
 			return "/login.jsp";
 		}
 
-		UserDao_refactoring dao = new UserDao_refactoring();
+		UserDao_refactoring dao = UserDao_refactoring.getInstance();
 		User user = null;
 		user = dao.getUser(userId);
 		if(user==null || !password.equals(user.getPw())){

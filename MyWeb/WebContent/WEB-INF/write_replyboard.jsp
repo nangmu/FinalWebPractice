@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html"
     pageEncoding="utf-8"%>
 <%@ page import="main.java.VO.*,java.util.ArrayList" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <% String userName = (String)request.getSession().getAttribute("userName"); %>
 <% String userId = (String)request.getSession().getAttribute("userId"); %>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -26,7 +26,7 @@
 
 <tr>
 <td>파일:</td>
-<td><input type="file" name="file" ></td>
+<td><input type="file" name="filename" multiple="multiple"></td>
 </tr>
 
 <tr>

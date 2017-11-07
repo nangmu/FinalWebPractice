@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import main.java.Exception.MySqlException;
 import main.java.VO.User;
 public class UserDao_refactoring {
+	private UserDao_refactoring(){}
+	private static class Singleton{
+		private static final UserDao_refactoring instance= new UserDao_refactoring();
+	}
+	public static UserDao_refactoring getInstance(){
+		return Singleton.instance;
+	}
+	
 	public void insertUser(User user)throws MySqlException{
 		  JdbcTemplate template = new JdbcTemplate() {
 			@Override

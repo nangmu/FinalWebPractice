@@ -1,13 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ page import="main.java.VO.*,java.util.ArrayList" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <%
+response.setHeader("Cache-Control","no-store");
+response.setHeader("Cache-Control","no-cache");
+
 String message = (String)request.getAttribute("message");
-String search_key = request.getParameter("search_key");
-String search_value = request.getParameter("search_value");
+String search_key =(String) request.getAttribute("search_key");
+String search_value =(String) request.getAttribute("search_value");
 if(search_key==null) search_key="";
 if(search_value==null) search_value="";
+
 %>
 <html>
 <head>
@@ -37,32 +41,34 @@ int totalPage = paging.getTotalPage();
 int curGNum = paging.getCurGroupNum();
 int page_nav_start = paging.getStartPageNum();
 int page_nav_end = paging.getEndPageNum();
-int record_start = paging.getStartingRecordIdx();
-int record_end = paging.getEndingRecordIdx();
+//int record_start = paging.getStartingRecordIdx();
+//int record_end = paging.getEndingRecordIdx();
 %>
-<% for(int i=record_start;i<=record_end;i++){ 
+<% for(int i=0;i<=boards.size()-1;i++){ 
 Board board = boards.get(i);
 %>
 <tr>
 <td><%= board.getbNum() %></td>
 <td>
-<%for(int j=0;j<board.getbLevel();j++){ out.print("-");} %>
-<a href="/detail_rb?bNum=<%=board.getbNum()%>"><%= board.getTitle() %></a></td>
+<%for(int j=0;j<board.getbLevel();j++){ out.print("[-]");} %>
+<a href="/upviewcount?bNum=<%=board.getbNum()%>"><%= board.getTitle() %></a></td>
 <td><%= board.getWriter() %></td>
 <td><%= board.getViewCount() %></td>
 <td><%= board.getTime() %></td>
 </tr>
 <%} %>
 </table>
-<!-- 
-<form action="/replyboard" method="post">
+ 
+<form action="/search_board" method="post">
 <select name="search_key">
 	<option value="title" <%if(search_key.equals("title")) out.print("selected"); %>>제목</option>
 	<option value="writer" <%if(search_key.equals("writer")) out.print("selected"); %>>작성자</option>
+	<option value="contents" <%if(search_key.equals("contents")) out.print("selected"); %>>내용</option>
 </select>
-<input type="text" name="search_value" value=<%=search_value %> />
-<input type="submit" value="검색"/>
-</form> -->
+<input type="text" name="search_value" value=<%=search_value %> >
+<input type="submit" value="검색">
+</form>
+
 
 <br>
 <a href="/replyboard?reqPage=1">[<<]</a>

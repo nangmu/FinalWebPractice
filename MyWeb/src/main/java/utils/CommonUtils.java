@@ -10,7 +10,7 @@ public class CommonUtils {
 	 public static String toUTF8(String str){
 		 String utf8=null;
 		try {
-			utf8 =  new String(str.getBytes("8859-1"),"utf-8");
+			utf8 =  new String(str.getBytes("ISO-8859-1"),"utf-8");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -3,18 +3,18 @@ package main.java.VO;
 import java.sql.Timestamp;
 
 public class Board {
-	int bNum;
-	int bGroup;
-	int bLevel;
-	int bOrder;
-	String id;
-	String writer;
-	String title;
-	StringBuilder contents = new StringBuilder();
-	int viewCount=0;
-	String originalFileName;
-	String storedFileName;
-	Timestamp time;
+	private int bNum;
+	private int bGroup;
+	private int bLevel;
+	private int bOrder;
+	private String id;
+	private String writer;
+	private String title;
+	private StringBuilder contents = new StringBuilder();
+	private int viewCount=0;
+	private String originalFileName;
+	private String storedFileName;
+	private Timestamp time;
 	
 	public Board(){}
 	public Board(int num, int group, int level, int order){

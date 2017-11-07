@@ -19,8 +19,8 @@ import main.java.VO.User;
 /*
  * 사용자 목록 보기 처리 게시판 - ShowUserlistController
  */
-public class UserListController implements Controller{
-	private static final Logger logger = LoggerFactory.getLogger(UserListController.class);
+public class UserList_Show implements Controller{
+	private static final Logger logger = LoggerFactory.getLogger(UserList_Show.class);
 
 	@Override
 	public String doService(HttpServletRequest req, HttpServletResponse resp) {
@@ -30,7 +30,7 @@ public class UserListController implements Controller{
 		if(reqPage==null || reqPage.equals("")) reqPage = "1";
 		int curPage = Integer.parseInt(reqPage);
 		
-		UserDao_refactoring dao = new UserDao_refactoring();
+		UserDao_refactoring dao = UserDao_refactoring.getInstance();
 		ArrayList<User> userList = dao.getAllUsers();
 		int totalRecords = userList.size();
 

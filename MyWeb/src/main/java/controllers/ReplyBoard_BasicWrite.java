@@ -20,12 +20,11 @@ import main.java.utils.CommonUtils;
 /*
  * 답변게시판 글 쓰기 처리 컨트롤러 - replyboard_Write글Controller
  */
-public class WriteReplyBoardController implements Controller {
-	private static final Logger logger = LoggerFactory.getLogger(WriteReplyBoardController.class);
+public class ReplyBoard_BasicWrite implements Controller {
+	private static final Logger logger = LoggerFactory.getLogger(ReplyBoard_BasicWrite.class);
 	
 	@Override
 	public String doService(HttpServletRequest req, HttpServletResponse resp) {
-		
 		//String saveDir = req.getServletContext().getRealPath(""); 배포시 적용
 		String saveDir = "C:/uploadFile";
 		int maxSize = 1024*1024*100;
@@ -37,14 +36,18 @@ public class WriteReplyBoardController implements Controller {
 			String id = multipartRequest.getParameter("id");
 			String writer = multipartRequest.getParameter("writer");
 			
-			Enumeration em = multipartRequest.getFileNames();
+			Enumeration<String> files = multipartRequest.getFileNames();
 			String origin="",stored="";
-			
 			//파일이 여러개 전송될 경우, DB구조 변경하거나 처리 방식 변경해야 됨.
 			//현재는 파일 1개만 전송된다 가정.
-			while(em.hasMoreElements()){
+			while(files.hasMoreElements()){
 				origin=""; stored="";
-				File file = multipartRequest.getFile((String)em.nextElement());
+				String name = files.nextElement();
+				File file = multipartRequest.getFile(name);
+				logger.debug("em.nextElement:{}",name);
+				
+				logger.debug("filesystemName:{}",multipartRequest.getFilesystemName(name));
+				
 				long fileSize=0;
 				if (file!=null) {
 					fileSize=file.length();
@@ -68,7 +71,7 @@ public class WriteReplyBoardController implements Controller {
 				}
 			}
 			
-			BoardDao_refactoring dao = new BoardDao_refactoring();
+			BoardDao_refactoring dao = BoardDao_refactoring.getInstance();
 			
 			Board board = new Board();
 			board.setbGroup(dao.findUpdatedGroup()+1);
@@ -83,6 +86,7 @@ public class WriteReplyBoardController implements Controller {
 			board.setStoredFileName(stored);
 			
 			dao.insertBoard(board);
+			
 			logger.debug("새로운 글이 등록되었습니다. {} , {}",board.getbNum(),board.getTitle());
 		} catch (IOException e) {
 			//트랜잭션은 언제 적용할까..

@@ -30,7 +30,7 @@ public class SignupController implements Controller {
 			logger.debug("[입력에러] - 입력하세요");
 			return "/signup.jsp";
 		}
-		UserDao_refactoring dao = new UserDao_refactoring();
+		UserDao_refactoring dao = UserDao_refactoring.getInstance();
 		User check = dao.getUser(userId);
 		
 		if (check != null) {
