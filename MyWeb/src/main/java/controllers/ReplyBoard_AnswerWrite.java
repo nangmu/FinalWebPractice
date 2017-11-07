@@ -12,9 +12,9 @@ import main.java.VO.Board;
 /*
  * 답변게시판 답변등록 처리 컨트롤러 replyboard_AnswerRegistController
  */
-public class AnswerReplyBoardController implements Controller {
+public class ReplyBoard_AnswerWrite implements Controller {
 	/** The usual Logger.*/
-	private static final Logger logger = LoggerFactory.getLogger(AnswerReplyBoardController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ReplyBoard_AnswerWrite.class);
 	
 	@Override
 	public String doService(HttpServletRequest req, HttpServletResponse resp) {
@@ -31,7 +31,7 @@ public class AnswerReplyBoardController implements Controller {
 		board.setId(id);board.setWriter(writer);
 		board.setOriginalFileName("");
 		board.setStoredFileName("");
-		BoardDao_refactoring dao = new BoardDao_refactoring();
+		BoardDao_refactoring dao = BoardDao_refactoring.getInstance();
 		dao.upOrder((Integer.parseInt(req.getParameter("parent_bGroup"))),
 						(Integer.parseInt(req.getParameter("parent_bOrder"))));
 		

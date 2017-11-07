@@ -11,17 +11,21 @@ public class RequestMapping {
 		map.put("/signupForm", new ForwardController("/signup.jsp"));
 		map.put("/write_rb_Form", new ForwardController("/write_replyboard.jsp"));
 		map.put("/answer_rb_Form", new ForwardController("/answer_replyboard.jsp"));
+		map.put("/detail_rb_Form", new ForwardController("/detail_replyboard.jsp"));
 		map.put("/login", new LoginController());
 		map.put("/signup", new SignupController());
-		map.put("/userlist", new UserListController());
-		map.put("/replyboard", new ReplyBoardController());
-		map.put("/detail_rb", new DetailReplyBoardController());
-		map.put("/answer_rb", new AnswerReplyBoardController());
-		map.put("/write_rb", new WriteReplyBoardController());
+		map.put("/userlist", new UserList_Show());
+		map.put("/replyboard", new ReplyBoard_Show());
+		map.put("/detail_rb", new ReplyBoard_ShowDetail());
+		map.put("/answer_rb", new ReplyBoard_AnswerWrite());
+		map.put("/write_rb", new ReplyBoard_BasicWrite2());
 		map.put("/logout", new LogoutController());
-		map.put("/deleteReplyBoard", new DeleteReplyBoardController());
+		map.put("/deleteReplyBoard", new ReplyBoard_BasicDelete());
 		map.put("/filedown", new FileDownController());
-	}
+		map.put("/upviewcount", new ReplyBoard_UpViewCount());
+		map.put("/search_board", new ReplyBoard_Search());
+		map.put("/write_comment", new ReplyBoard_CommentWrite());
+	} // "write_rb", "/answer_rb", "/signup"
 	public Controller getController(String url){
 		return map.get(url);
 	}

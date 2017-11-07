@@ -1,27 +1,39 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html"
     pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
+<style>
+.result{
+color: red;
+}
+</style>
+<script>
+function check(){
+	var id = document.getElementById("id");
+}
+</script>
 </head>
 <body>
 
-<table><form action="/signup" method="post">
+<table><form id="form1" action="/signup" method="post">
 <tr>
 <td>ID</td>
-<td><INPUT type="text" name="id"/></td>
+<td><INPUT id="id" type="text" name="id"/></td>
+<td><span class="result" id="result_id"></span></td>
 </tr>
 
 <tr>
 <td>PW</td>
-<td><INPUT type="password" name="pw"/></td>
+<td><INPUT id="password" type="password" name="pw"/></td>
+<td><span class="result" id="result_pw"></span></td>
 </tr>
 
 <tr>
 <td>이름</td>
-<td><INPUT type="text" name="name" /></td>
+<td><INPUT id="name" type="text" name="name" /></td>
+<td><span class="result" id="result_name"></span></td>
 </tr>
 
 <tr>

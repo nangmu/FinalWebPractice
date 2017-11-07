@@ -19,7 +19,7 @@ public class Paging {
 	//DB에서 전체 VO 인스턴스를 가져와 페이징처리를 하는 경우 보여줄 레코드의 시작과 끝 인덱스.
 	private int startingRecordIdx;
 	private int endingRecordIdx;
-
+	
 	public Paging(){}
 	public Paging(int pageSize, int groupSize,int totalrecords,int curPage){
 		this.pageSize=pageSize; this.groupSize=groupSize;

@@ -12,5 +12,7 @@ public class CommonUtilsTest {
 		System.out.println(CommonUtils.getRandomString());
 		System.out.println(CommonUtils.getRandomString());
 		System.out.println(Charset.defaultCharset().name());
+		String sql="select * from boards where ? like '%?%' order by bGroup desc, bOrder asc";
+		System.out.println(sql);
 	}
 }

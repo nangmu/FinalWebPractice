@@ -34,7 +34,7 @@ public class LoginFilter implements Filter{
 		HttpSession session = request.getSession();
 		
 		String userId = (String)session.getAttribute("userId");
-		String[] urls = {"/userlist","/answer_rb_Form","/write_rb_Form"};
+		String[] urls = {"/userlist","/answer_rb_Form","/write_rb_Form","/write_comment"};
 		boolean accessFlag = false;
 		
 		String url = request.getRequestURI();

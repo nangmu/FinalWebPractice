@@ -2,7 +2,6 @@ package main.java.controllers;
 
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,8 +15,8 @@ import main.java.VO.Paging;
 /*
  * 답변게시판 보기 처리 컨트롤러 - replyboard_ShowBoardController + paging
  */
-public class ReplyBoardController implements Controller{
-	private static final Logger logger = LoggerFactory.getLogger(ReplyBoardController.class);
+public class ReplyBoard_Show implements Controller{
+	private static final Logger logger = LoggerFactory.getLogger(ReplyBoard_Show.class);
 	
 	@Override
 	public String doService(HttpServletRequest req, HttpServletResponse resp) {
@@ -28,18 +27,22 @@ public class ReplyBoardController implements Controller{
 		if(reqPage==null || reqPage.equals("")) reqPage = "1";
 		int curPage = Integer.parseInt(reqPage);
 		
-		BoardDao_refactoring dao = new BoardDao_refactoring();
-		//상위 Num개만 가져오게 할 수도 있다. dao.getTopBoards(int Num);
-		ArrayList<Board> boardList = dao.getAllBoards();
-		if(boardList==null){
+		BoardDao_refactoring boardDao = BoardDao_refactoring.getInstance();
+		//ArrayList<Board> boardList = dao.getAllBoards();
+		int totalRecords = boardDao.getTotalCount();
+		
+		if(totalRecords==0){
 			req.setAttribute("message", "글이 등록되지 않았습니다.");
-		}else{
-			int totalRecords = boardList.size();
-			req.setAttribute("message", "전체 글: "+totalRecords+"개");
-			Paging paging = new Paging(pageSize,groupSize,totalRecords,curPage);
-			req.setAttribute("paging", paging);
-			req.setAttribute("boards", boardList);
+			return "/replyboard.jsp";
 		}
+		int startingRecordNum = (curPage-1)*pageSize+1;
+		ArrayList<Board> boardList = boardDao.getBoards(startingRecordNum, pageSize);
+		Paging paging = new Paging(pageSize, groupSize, totalRecords, curPage);
+		
+		req.setAttribute("message", "전체 글: " + totalRecords + "개");
+		req.setAttribute("paging", paging);
+		req.setAttribute("boards", boardList);
+		
 		logger.debug("[답변 게시판] 화면처리에 필요한 정보를 담습니다.");
 		return "/replyboard.jsp";
 	}
