@@ -1,27 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ page import= "main.java.VO.Board" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 Board board = (Board)request.getAttribute("board");
+if(board==null) System.out.println("nullì´ë„¤..................");
 %>
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>°Ô½ÃÆÇ »ó¼¼ º¸±â</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>ê²Œì‹œíŒ ìƒì„¸ ë³´ê¸°</title>
 </head>
 <body>
-<input type="button" name="button" value="¸ñ·ÏÀ¸·Î" onclick="window.location.replace('/replyboard')"/>
-<input type="button" name="button" value="´äº¯ÇÏ±â" onclick="window.location.replace('/answer_rb_Form?bGroup=<%=board.getbGroup()%>&bLevel=<%=board.getbLevel()%>&bOrder=<%=board.getbOrder()%>')"/>
+<input type="button" name="button" value="ëª©ë¡ìœ¼ë¡œ" onclick="window.location.replace('/replyboard')"/>
+<input type="button" name="button" value="ë‹µë³€í•˜ê¸°" onclick="window.location.replace('/answer_rb_Form?bGroup=<%=board.getbGroup()%>&bLevel=<%=board.getbLevel()%>&bOrder=<%=board.getbOrder()%>')"/>
+<input type="button" name="button" value="ì‚­ì œí•˜ê¸°" onclick="window.location.replace('/deleteReplyBoard?bNum=<%=board.getbNum()%>')"/>
+<%if(!board.getOriginalFileName().equals("")){ %>
+<input type="button" name="button" value="<%=board.getOriginalFileName()%>" onclick="window.location.replace('/filedown?filename=<%=board.getStoredFileName() %>')"/>
+<%}%>
 
 <table>
 <tr>
-	<td>Á¦¸ñ:</td>
+	<td>ì œëª©:</td>
 	<td><%=board.getTitle() %></td>
 </tr>
 <tr>
-	<td>³»¿ë:</td>
+	<td>ë‚´ìš©:</td>
 	<td><%=board.getContents() %></td>
 </tr>
 

@@ -16,7 +16,7 @@ public class Paging {
 	private int startPageNum;
 	private int endPageNum;
 	
-	//View¿¡¼­ ÀüÃ¼ ·¹ÄÚµå¸¦ °¡Á®¿Ã °æ¿ì, ¾Æ·¡¸¦ º¯¼ö¸¦ Âü°íÇÏ¿© curPage¿¡ Ç¥½ÃµÉ ÀûÀýÇÑ ·¹ÄÚµå¸¦ ¼±ÅÃÇÒ ¼ö ÀÖÀ½
+	//DBì—ì„œ ì „ì²´ VO ì¸ìŠ¤í„´ìŠ¤ë¥¼ ê°€ì ¸ì™€ íŽ˜ì´ì§•ì²˜ë¦¬ë¥¼ í•˜ëŠ” ê²½ìš° ë³´ì—¬ì¤„ ë ˆì½”ë“œì˜ ì‹œìž‘ê³¼ ë ì¸ë±ìŠ¤.
 	private int startingRecordIdx;
 	private int endingRecordIdx;
 
@@ -33,7 +33,6 @@ public class Paging {
 		curGroupNum = curPage/groupSize;
 		if(curPage%groupSize!=0) curGroupNum++;
 		
-		// 1p 0~4 2p 5~9 3p 10~14 np (curPage-1)*pageSize ~ curPage*pageSize-1
 		startingRecordIdx= (curPage-1)*pageSize;
 		endingRecordIdx = curPage*pageSize-1;
 		if(endingRecordIdx>totalRecords-1){

@@ -17,8 +17,10 @@ public class RequestMapping {
 		map.put("/replyboard", new ReplyBoardController());
 		map.put("/detail_rb", new DetailReplyBoardController());
 		map.put("/answer_rb", new AnswerReplyBoardController());
-		map.put("/write_rb", new WriteReplyBoardController());;
+		map.put("/write_rb", new WriteReplyBoardController());
 		map.put("/logout", new LogoutController());
+		map.put("/deleteReplyBoard", new DeleteReplyBoardController());
+		map.put("/filedown", new FileDownController());
 	}
 	public Controller getController(String url){
 		return map.get(url);

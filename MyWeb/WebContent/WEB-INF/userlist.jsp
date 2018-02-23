@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ page import="main.java.VO.*,java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
@@ -9,16 +9,15 @@ ArrayList<User> users = (ArrayList<User>)request.getAttribute("users");
 %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 </head>
 <body>
 <%= message %>&nbsp&nbsp
-<input type="button" value="¸ŞÀÎÆäÀÌÁö·Î" onclick="window.location.replace('/')"/><br><br>
+<input type="button" value="ë©”ì¸í˜ì´ì§€ë¡œ" onclick="window.location.replace('/')"/><br><br>
 <table>
 <tr>
-<th>¾ÆÀÌµğ</th>
-<th>ÀÌ¸§</th>
+<th>ì•„ì´ë””</th>
+<th>ì´ë¦„</th>
 </tr>
 <%if(users==null) return;
 Paging paging = (Paging)request.getAttribute("paging");

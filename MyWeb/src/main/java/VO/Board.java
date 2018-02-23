@@ -1,5 +1,7 @@
 package main.java.VO;
 
+import java.sql.Timestamp;
+
 public class Board {
 	int bNum;
 	int bGroup;
@@ -10,12 +12,34 @@ public class Board {
 	String title;
 	StringBuilder contents = new StringBuilder();
 	int viewCount=0;
+	String originalFileName;
+	String storedFileName;
+	Timestamp time;
 	
 	public Board(){}
 	public Board(int num, int group, int level, int order){
 		bNum=num; bGroup=group; bLevel=level; bOrder=order;
 	}
 	
+	
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
+	public String getStoredFileName() {
+		return storedFileName;
+	}
+	public void setStoredFileName(String storedFileName) {
+		this.storedFileName = storedFileName;
+	}
+	public Timestamp getTime(){
+		return time;
+	}
+	public void setTime(Timestamp time){
+		this.time = time;
+	}
 	public int getbNum() {
 		return bNum;
 	}

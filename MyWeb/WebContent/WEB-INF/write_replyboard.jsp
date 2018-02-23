@@ -1,33 +1,38 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ page import="main.java.VO.*,java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <% String userName = (String)request.getSession().getAttribute("userName"); %>
 <% String userId = (String)request.getSession().getAttribute("userId"); %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
 </head>
 <body>
-<table><form action="/write_rb" method="post">
-<input type="hidden" name="id" value= <%=userId %>/>
-<input type="hidden" name="writer" value= <%=userName %>/>
+<table><form action="/write_rb" method="post" enctype="multipart/form-data">
+<input type="hidden" name="id" value= <%=userId %>>
+<input type="hidden" name="writer" value= <%=userName %>>
 
 <tr>
-<td>Á¦¸ñ:</td>
-<td><input type="text" name="title" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä."/></td>
+<td>ì œëª©:</td>
+<td><input type="text" name="title" placeholder="ì œëª©ì„ ì…ë ¥í•˜ì„¸ìš”."></td>
 </tr>
 
 <tr>
-<td>³»¿ë:</td>
-<td><textarea rows="10" cols="50" name="contents" placeholder="³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä."></textarea></td>
+<td>ë‚´ìš©:</td>
+<td><textarea rows="10" cols="50" name="contents" placeholder="ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”."></textarea></td>
+</tr>
+
+<tr>
+<td>íŒŒì¼:</td>
+<td><input type="file" name="file" ></td>
 </tr>
 
 <tr>
 <td></td>
-<td><input type="submit" value="µî·Ï"/><input type="reset" value="Ãë¼Ò"/>
-<input type="button" value="¸ñ·ÏÀ¸·Î" onclick="window.location.replace('/replyboard')"/></td>
+<td><input type="submit" value="ë“±ë¡"/><input type="reset" value="ì·¨ì†Œ">
+<input type="button" value="ëª©ë¡ìœ¼ë¡œ" onclick="window.location.replace('/replyboard')"></td>
 </tr>
 </form></table>
 </body>

@@ -1,40 +1,48 @@
 package main.java.controllers;
 
-import java.sql.SQLException;
+import java.io.UnsupportedEncodingException;
 
-import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.DAO.UserDao;
+import main.java.DAO.UserDao_refactoring;
 import main.java.VO.User;
 
+/*
+ * ë¡œê·¸ì¸ ì²˜ë¦¬ ê²Œì‹œíŒ LoginController - javascriptë¡œ ê²€ì¦ ì²˜ë¦¬ í•  ê²ƒ.
+ */
 public class LoginController implements Controller {
 	/** The usual Logger.*/
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@Override
 	public String doService(HttpServletRequest req, HttpServletResponse resp) {
+		try {
+			req.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String userId = req.getParameter("id");
 		String password = req.getParameter("pw");
 		
 		if(userId==null || password ==null || userId.equals("")|| password.equals("")){
-			logger.debug("[·Î±×ÀÎ ¿À·ù] - ÀÔ·ÂÇÏ¼¼¿ä.");
+			logger.debug("[ì…ë ¥ì—ëŸ¬] - ì…ë ¥í•˜ì„¸ìš”.");
 			return "/login.jsp";
 		}
 
-		UserDao dao = new UserDao();
+		UserDao_refactoring dao = new UserDao_refactoring();
 		User user = null;
 		user = dao.getUser(userId);
 		if(user==null || !password.equals(user.getPw())){
-			logger.debug("[·Î±×ÀÎ ¿À·ù] - ID°¡ Á¸ÀçÇÏÁö ¾Ê°Å³ª Password°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+			logger.debug("[ì…ë ¥ì—ëŸ¬] - ID ë˜ëŠ” PASSWORDë¥¼ ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 			return "/login.jsp";
 		}
 		
-		logger.debug("{} ·Î±×ÀÎ¼º°ø",userId);
+		logger.debug("ë¡œê·¸ì¸ ì„±ê³µ - ì•„ì´ë””:{} ì´ë¦„:{} ",userId,user.getName());
 		req.getSession().setAttribute("userId", userId);
 		req.getSession().setAttribute("userName", user.getName());
 		

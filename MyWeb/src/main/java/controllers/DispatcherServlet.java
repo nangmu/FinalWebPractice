@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
- * HTTPø‰√ª ¡ﬂ GET,POSTø° ¥Î«ÿº≠∏∏ º≠∫ÒΩ∫ «œπ«∑Œ
- */
 @WebServlet(urlPatterns="/", loadOnStartup=1)
 public class DispatcherServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -37,24 +34,25 @@ public class DispatcherServlet extends HttpServlet{
 	
 	private void doService(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException{
 		String url = req.getRequestURI();
-		logger.debug("Dispatcher Start!!! RequestURI:{}",url);
-		logger.debug("»§Ω√?:{}",req.getServletPath());
+		logger.debug("[[Dispatcher Start]] RequestURI:{}",url);
 		Controller controller = requestMapping.getController(url);
 		if(controller==null){
-			logger.debug("ø√πŸ∏£¡ˆ æ ¿∫ ∞Ê∑Œ¿‘¥œ¥Ÿ.");
+			logger.debug("[[ÏûòÎ™ªÎêú urlÎ°ú Ï†ëÍ∑ºÌïòÏÖ®ÏäµÎãàÎã§. {}]]",url);
 			return;
 		}
 		
 		String result = controller.doService(req,resp);
-		//ªÁøÎ¿⁄ø°∞‘ ∞·∞˙∏¶ æÀ∑¡¡‡æﬂ «‘--> error? success? ing~?
+		
+		if(result==null){
+			return;
+		}
 		if((result.trim()).startsWith("redirect:")){
-			logger.debug("{}∑Œ ¿Ãµø",result);
+			logger.debug("[[Dispatcher End]] Redirect:{}",result.substring(9));
 			resp.sendRedirect(result.substring(9));
 			return;
 		}
-		logger.debug("paging{}",req.getAttribute("paging"));
 		String path = "/WEB-INF"+result;
-		logger.debug("{}∑Œ ¿Ãµø",path);
+		logger.debug("[[Dispatcher End]] Forward:{}",result);
 		RequestDispatcher rd = req.getRequestDispatcher(path);
 		rd.forward(req, resp);
 	}
